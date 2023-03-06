@@ -1,0 +1,77 @@
+type: grid
+columns: 2
+square: false
+cards:
+  - type: custom:auto-entities
+    filter:
+      include:
+        - entity_id: sensor.pollens_*
+          options:
+            type: custom:button-card
+            show_state: true
+            show_last_changed: true
+            styles:
+              grid:
+                - grid-template-areas: '"i n" "i s" "i l"'
+                - grid-template-columns: 1fr 70%
+              icon:
+                - color: |
+                    [[[
+                    if (entity.state == 'élevé') return 'red'; 
+                    if (entity.state == 'faible') return 'yellow'; 
+                    return 'orange'
+                    ]]]
+                - height: 30px
+                - width: 60px
+              name:
+                - font-weight: bold
+                - font-size: 13px
+                - color: white
+                - align-self: left
+                - justify-self: end
+                - padding-bottom: 4px
+              state:
+                - font-weight: bold
+                - font-size: 13px
+                - color: white
+                - align-self: right
+                - justify-self: end
+                - padding-bottom: 4px
+              label:
+                - font-weight: bold
+                - font-size: 13px
+                - color: white
+                - align-self: right
+                - justify-self: end
+                - padding-bottom: 4px
+                  grid: null
+      exclude:
+        - entity_id: sensor.pollens_13_risklevel
+        - state: nul
+    card:
+      type: entities
+      title: Allergènes - Actifs
+      show_header_toggle: false
+    sort:
+      method: state
+      numeric: false
+  - type: custom:auto-entities
+    filter:
+      include:
+        - entity_id: sensor.pollens_*
+          options:
+            type: custom:mushroom-entity-card
+            icon_color: green
+            secondary_info: last-changed
+      exclude:
+        - entity_id: sensor.pollens_13_risklevel
+        - state: élevé
+        - state: faible
+        - state: moyen
+    card:
+      type: entities
+      title: Allergènes - Inactifs
+      show_header_toggle: false
+    sort:
+      method: state
+      numeric: false
