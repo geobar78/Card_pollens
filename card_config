@@ -1,0 +1,50 @@
+type: grid
+columns: 2
+square: false
+cards:
+  - type: custom:auto-entities
+    filter:
+      include:
+        - entity_id: sensor.pollens_*
+          options:
+            style: |
+              :host {
+                {% if is_state(config.entity, "faible") %}
+                  --paper-item-icon-color: yellow;
+                {% elif is_state(config.entity, "moyen") %}
+                  --paper-item-icon-color: orange;
+                {% elif is_state(config.entity, "élevé") %}
+                  --paper-item-icon-color: red;
+                {% endif %}
+              }
+      exclude:
+        - entity_id: sensor.pollens_13_risklevel
+        - state: nul
+    card:
+      type: entities
+      title: Allergènes - Actifs
+      show_header_toggle: false
+    sort:
+      method: state
+      numeric: false
+  - type: custom:auto-entities
+    filter:
+      include:
+        - entity_id: sensor.pollens_*
+          options:
+            style: |
+              :host {
+               --paper-item-icon-color: green;
+              }
+      exclude:
+        - entity_id: sensor.pollens_13_risklevel
+        - state: élevé
+        - state: faible
+        - state: moyen
+    card:
+      type: entities
+      title: Allergènes - Inactifs
+      show_header_toggle: false
+    sort:
+      method: state
+      numeric: false
